@@ -6,8 +6,8 @@ prompts the user for a search pattern to use with `:grep`. `:grep` is run on the
 selected dir (using the parent if a file is selected).
 
 Originally written by [scrooloose](https://gist.github.com/scrooloose/205807),
-enhanced by [masaakif](https://gist.github.com/masaakif/414375).
-Converted plugin by [MarSoft](https://github.com/MarSoft/nerdtree-grep-plugin).
+enhanced by [masaakif](https://gist.github.com/masaakif/414375),
+converted to plugin style by [MarSoft](https://github.com/MarSoft/nerdtree-grep-plugin).
 
 ## Added below new features.
 1. Ripgrep supported. Menu item is 'r'.
