@@ -9,8 +9,8 @@ Originally written by [scrooloose](https://gist.github.com/scrooloose/205807),
 enhanced by [masaakif](https://gist.github.com/masaakif/414375).
 
 ## Added below new features.
-1. Ripgrep supported.
-1. Open file/dir by file association and extention in Windows
+1. Ripgrep supported. Menu item is 'r'.
+1. Open file/dir by file association and extention in Windows. Menu item is 'o'.
    (Cygwin supported)
 
 ## Installation
@@ -40,3 +40,5 @@ For Plug
 Plug 'scrooloose/nerdtree'
 Plug 'MarSoft/nerdtree-grep-plugin'
 ```
+
+
