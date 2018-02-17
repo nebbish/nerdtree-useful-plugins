@@ -10,7 +10,7 @@ enhanced by [masaakif](https://gist.github.com/masaakif/414375),
 converted to plugin style by [MarSoft](https://github.com/MarSoft/nerdtree-grep-plugin).
 
 ## Added below new features.
-1. Ripgrep supported. Menu item is 'r'.
+1. Ripgrep supported. Menu item is 'r'. Windows __NOT__ supported.
 1. Open file/dir by file association and extention in Windows. Menu item is 'o'.
    (Cygwin supported)
 
@@ -18,7 +18,7 @@ converted to plugin style by [MarSoft](https://github.com/MarSoft/nerdtree-grep-
 
 For Pathogen
 
-`git clone https://github.com/MarSoft/nerdtree-grep-plugin.git ~/.vim/bundle/nerdtree-grep-plugin`
+`git clone https://github.com/masaakif/nerdtree-grep-plugin.git ~/.vim/bundle/nerdtree-grep-plugin`
 
 Now reload `vim`.
 
