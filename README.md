@@ -26,20 +26,23 @@ For Vundle
 
 ```
 Plugin 'scrooloose/nerdtree'
-Plugin 'MarSoft/nerdtree-grep-plugin'
+Plugin 'masaakif/nerdtree-grep-plugin'
 ```
 
 For NeoBundle
 
 ```
 NeoBundle 'scrooloose/nerdtree'
-NeoBundle 'MarSoft/nerdtree-grep-plugin'
+NeoBundle 'masaakif/nerdtree-grep-plugin'
 ```
 
 For Plug
 ```
 Plug 'scrooloose/nerdtree'
-Plug 'MarSoft/nerdtree-grep-plugin'
+Plug 'masaakif/nerdtree-grep-plugin'
 ```
+
+For dein
+???
 
 
