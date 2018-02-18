@@ -11,7 +11,7 @@ enhanced by [masaakif](https://gist.github.com/masaakif/414375).
 ## Added below new features.
 1. Ripgrep supported. Menu item is 'r'.
 1. Open file/dir by file association and extention in Windows. Menu item is 'o'.
-   (Cygwin supported)
+   (Supported only WindowsOS and Cygwin)
 
 ## Installation
 
