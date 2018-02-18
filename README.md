@@ -6,10 +6,11 @@ prompts the user for a search pattern to use with `:grep`. `:grep` is run on the
 selected dir (using the parent if a file is selected).
 
 Originally written by [scrooloose](https://gist.github.com/scrooloose/205807),
-enhanced by [masaakif](https://gist.github.com/masaakif/414375).
+enhanced by [masaakif](https://gist.github.com/masaakif/414375),
+converted to plugin style by [MarSoft](https://github.com/MarSoft/nerdtree-grep-plugin).
 
 ## Added below new features.
-1. Ripgrep supported. Menu item is 'r'.
+1. Ripgrep supported. Menu item is 'r'. WindowsOS __NOT__ supported.
 1. Open file/dir by file association and extention in Windows. Menu item is 'o'.
    (Supported only WindowsOS and Cygwin)
 
@@ -17,7 +18,7 @@ enhanced by [masaakif](https://gist.github.com/masaakif/414375).
 
 For Pathogen
 
-`git clone https://github.com/MarSoft/nerdtree-grep-plugin.git ~/.vim/bundle/nerdtree-grep-plugin`
+`git clone https://github.com/masaakif/nerdtree-grep-plugin.git ~/.vim/bundle/nerdtree-grep-plugin`
 
 Now reload `vim`.
 
@@ -25,20 +26,23 @@ For Vundle
 
 ```
 Plugin 'scrooloose/nerdtree'
-Plugin 'MarSoft/nerdtree-grep-plugin'
+Plugin 'masaakif/nerdtree-grep-plugin'
 ```
 
 For NeoBundle
 
 ```
 NeoBundle 'scrooloose/nerdtree'
-NeoBundle 'MarSoft/nerdtree-grep-plugin'
+NeoBundle 'masaakif/nerdtree-grep-plugin'
 ```
 
 For Plug
 ```
 Plug 'scrooloose/nerdtree'
-Plug 'MarSoft/nerdtree-grep-plugin'
+Plug 'masaakif/nerdtree-grep-plugin'
 ```
+
+For dein
+???
 
 
