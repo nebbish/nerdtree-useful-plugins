@@ -1,4 +1,4 @@
-nerdtree-usefule-plugins
+nerdtree-useful-plugins
 ========================
 This repository has below 2 plugins
 1. grep_menuitem.vim
