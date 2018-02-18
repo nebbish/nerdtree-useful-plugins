@@ -1,14 +1,13 @@
 "shove this in ~/.vim/nerdtree_plugin/grep_menuitem.vim
 "
-"A really rough integration of :grep with nerdtree. Adds a 'g' menu item that
-"prompts the user for a search pattern to use with :grep. :grep is run on the
-"selected dir (using the parent if a file is selected)
+" A really rough integration of :grep with nerdtree. Adds a 'g' menu item that
+" prompts the user for a search pattern to use with :grep. :grep is run on the
+" selected dir (using the parent if a file is selected)
 "
-" 'r' : ripgrep under selected dir.
-"       This is for ripgrep user. Ripgrep is much, much faster.
-"       Requirements:
-"       - Ripgrep: https://github.com/BurntSushi/ripgrep
-"       - vim-ripgrep: https://github.com/jremmen/vim-ripgrep
+" This version supports ripgrep. Ripgrep is much, much faster version of grep.
+" Requirements:
+" - Ripgrep: https://github.com/BurntSushi/ripgrep
+" - vim-ripgrep: https://github.com/jremmen/vim-ripgrep
 "
 " Originally written by scrooloose
 " (http://gist.github.com/205807)
@@ -18,23 +17,25 @@ if exists("g:loaded_nerdtree_grep_menuitem")
 endif
 let g:loaded_nerdtree_grep_menuitem = 1
 
+if exists("g:loaded_rg")
+  " Doesn't work. Maybe, because of loading order of plugins...
+  let s:text = '(g)rep directory by Ripgrep'
+else
+  let s:text = '(g)rep directory'
+endif
+
 call NERDTreeAddMenuItem({
-            \ 'text': '(g)rep directory',
+            \ 'text': s:text,
             \ 'shortcut': 'g',
-            \ 'callback': 'NERDTreeGrep' })
+            \ 'callback': 'NERDTreeGrepDirectory' })
 
-call NERDTreeAddMenuItem({
-            \ 'text': '(r)ipgrep directory',
-            \ 'shortcut': 'r',
-            \ 'callback': 'NERDTreeRipGrepDirectory' })
+" FUNCTION: NERDTreeGrepDirectory() {{{1
+function! NERDTreeGrepDirectory()
+    let l:dirnode = g:NERDTreeDirNode.GetSelected()
 
-" FUNCTION: NERDTreeGrep() {{{1
-function! NERDTreeGrep()
-    let dirnode = g:NERDTreeDirNode.GetSelected()
-
-    let pattern = input("Enter the search pattern: ")
-    if pattern == ''
-        echo 'Aborted'
+    let l:pattern = input("Enter the search pattern: ")
+    if l:pattern == ''
+        echo 'Grep aborted.'
         return
     endif
 
@@ -42,54 +43,35 @@ function! NERDTreeGrep()
     wincmd w
 
     "a hack for *nix to make sure the output of "grep" isnt echoed in vim
-    let old_shellpipe = &shellpipe
-    let &shellpipe='&>'
-
-    try
-        exec 'silent cd ' . dirnode.path.str()
-        exec 'silent grep -rn ' . pattern . ' .'
-        " exec 'silent grep -rn ' . pattern . ' ' . dirnode.path.str()
-    finally
-        let &shellpipe = old_shellpipe
-    endtry
-
-    let hits = len(getqflist())
-    if hits == 0
-        echo "No hits"
-    elseif hits > 1
-        copen
-        " echo "Multiple hits. Jumping to first, use :copen to see them all."
+    let l:old_shellpipe = &shellpipe
+    if has("win32unix") || has("unix")
+    	let &shellpipe='&>'
     endif
 
-endfunction
-
-" FUNCTION: NERDTreeRipGrepDirectory() {{{1
-function! NERDTreeRipGrepDirectory()
-    let dirnode = g:NERDTreeDirNode.GetSelected()
-    let pattern = input("Enter the search pattern/options: ")
-
-    if pattern == ''
-        call nedtree#echo("Grep directory aborted.")
-        return
-    endif
-
-    wincmd w
-    let old_shellpipe = &shellpipe
-    let &shellpipe='&>'
-
     try
-        let s:current_dir = expand("%:p:h")
-        exec 'silent cd ' . dirnode.path.str()
-        exec 'silent Rg ' . pattern .' .'
+        let l:current_dir = expand("%:p:h")
+        exec 'silent cd ' . l:dirnode.path.str()
+        if exists("g:loaded_rg")
+            exec 'silent Rg ' . l:pattern . ' .'
+        else
+            exec 'silent vimgrep -rn ' . l:pattern . ' .'
+        endif
+    catch
+        let l:failed = 1
     finally
-        let &shellpipe = old_shellpipe
-        exec 'silent cd '. s:current_dir
+        let &shellpipe = l:old_shellpipe
+        exec 'silent cd '. l:current_dir
     endtry
 
-    let hits = len(getqflist())
-    if hits == 0
-        echo "No hits"
+    let l:hits = len(getqflist())
+    if l:hits == 0
+	if exists("l:failed")
+	    "call nerdtree#echo("Grep failed.")
+	else
+            "call nerdtree#echo("No match found for '" . l:pattern . "'.")
+	endif
     elseif hits > 1
         copen
     endif
+
 endfunction
