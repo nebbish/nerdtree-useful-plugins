@@ -22,12 +22,13 @@ call NERDTreeAddMenuItem({
 function! NERDTreeExecuteFileWin32()
     let treenode = g:NERDTreeFileNode.GetSelected()
     if treenode != {}
-        if has("unix")
+        if has("win32unix")
             " Cygwin user
-            let winpath = system("cygpath -w '" . treenode.path.str() . "'")
+            let winpath = "'" . system("cygpath -w '" . treenode.path.str() . "'") . "'"
         else
-            let winpath = treenode.path.str()
+            let winpath = '"' . treenode.path.str() . '"'
         endif
-        call system("explorer '" . winpath . "'")
+        call system("explorer " . winpath)
+        call nerdtree#echo('Opened ' . winpath)
     endif
 endfunction
