@@ -51,8 +51,8 @@ Plug 'scrooloose/nerdtree'
 Plug 'masaakif/nerdtree-useful-plugins'
 ```
 
-For dein
-```toml:plugins.toml
+For dein(plugins.toml)
+```
 [[plugins]]
 repo = 'scrooloose/nerdtree`
 
