@@ -15,7 +15,7 @@ converted to plugin style by [MarSoft](https://github.com/MarSoft/nerdtree-grep-
 
 #### Requiremnts for ripgrep users
 [Ripgrep](https://github.com/BurntSushi/ripgrep)
-[vim-ripgrep](https://github.com/jremmen/vim-ripgrep)
+[vim-ripgrep](https://github.com/jremmen/vim-ripgrep) The **vim-ripgrep** plugin must be download before **nerdtree-useful-plugins** Because, the plugin check the `g:loaded_rg` value.
 
 ## open_by_win_menuitem.vim
 Open selected node(file/dir) by file assocition with WindowsOS. Adds a `'o'`menu item that
@@ -34,6 +34,7 @@ Now reload `vim`.
 For Vundle
 
 ```
+Plugin 'jremmen/vim-ripgrep' 
 Plugin 'scrooloose/nerdtree'
 Plugin 'masaakif/nerdtree-useful-plugins'
 ```
@@ -41,18 +42,23 @@ Plugin 'masaakif/nerdtree-useful-plugins'
 For NeoBundle
 
 ```
+NeoBundle 'jremmen/vim-ripgrep' 
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'masaakif/nerdtree-useful-plugins'
 ```
 
 For Plug
 ```
+Plug 'jremmen/vim-ripgrep' 
 Plug 'scrooloose/nerdtree'
 Plug 'masaakif/nerdtree-useful-plugins'
 ```
 
 For dein(plugins.toml)
 ```
+[[plugins]]
+repo = 'jremmen/vim-ripgrep'
+
 [[plugins]]
 repo = 'scrooloose/nerdtree`
 
