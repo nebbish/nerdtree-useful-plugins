@@ -124,6 +124,7 @@ function! NERDTreeGrepDirectory()
         "exec 'silent grep! -nr ' . escape(l:pattern, '|#') . ' .'
         "exec 'silent grep! -nr ' . l:pattern . ' ' . l:dirnode.path.str()
         exec 'silent grep! -nr ' . escape(l:pattern, '|#') . ' ' . l:dirnode.path.str()
+        let failed = 0
     catch
         let failed = 1
     finally
@@ -159,6 +160,7 @@ function! NERDTreeRipGrepDirectory()
     try
         exec 'silent cd ' . l:dirnode.path.str()
         exec 'silent Rg ' . l:pattern .' .'
+        let failed = 0
     catch
         let failed = 1
     finally
