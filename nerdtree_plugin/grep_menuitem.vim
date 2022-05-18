@@ -61,6 +61,7 @@ function! s:HandleResults(failed)
     if l:hits == 0
         if exists("a:failed")
             "call nerdtree#echo("Grep failed.")
+            echo "Error occurred"
         else
             "call nerdtree#echo("No match found for " . l:pattern . " under [" . l:dirnode.path.str() . "].")
             echo "No hits"
@@ -123,7 +124,7 @@ function! NERDTreeGrepDirectory()
         "exec 'silent grep! -nr ' . l:pattern . ' .'
         "exec 'silent grep! -nr ' . escape(l:pattern, '|#') . ' .'
         "exec 'silent grep! -nr ' . l:pattern . ' ' . l:dirnode.path.str()
-        exec 'silent grep! -nr ' . escape(l:pattern, '|#') . ' ' . l:dirnode.path.str()
+        exec 'silent grep! -nr ' . escape(l:pattern, '|#') . ' "' . l:dirnode.path.str() . '"'
         let failed = 0
     catch
         let failed = 1
