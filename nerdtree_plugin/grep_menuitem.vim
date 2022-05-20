@@ -47,6 +47,18 @@ function! s:SetShellPipeNoEcho()
         "let &shellpipe = '>%s 2>&1'
         let &shellpipe = '>%s 2>nul'
     else
+        " NOTE:  this is apparently NOT enough, or not working in my
+        "        MacOS/iTerm environment.  In that environment, the
+        "        ':grep' command STILL clears the whole screen. :(
+        "        this happens even with the 'silent[!]' prefix
+        "
+        "        however, i still want to keep using 'silent grep!' in
+        "        the actual command, and stay in "cooked" mode so the
+        "        VIM window stays visible the whole time
+        "
+        "        so I am enabling the redraw command in the
+        "        HandleResults helper function
+        "
         " The '&>' is an advanced way in BASH to redirect BOTH stdout/stderr at
         " the same time.  see:  https://ss64.com/bash/syntax-redirection.html
         "let &shellpipe = '&>'
@@ -59,16 +71,23 @@ endfunction
 function! s:HandleResults(failed, pattern, path)
     let hits = len(getqflist())
     if l:hits == 0
+
+        " Is this :redraw necessary/helpful?
+        " Does it serve the same purpose as adjusting the termcap codes?
+        " why is it only for the no-hits case?
+        " does :copen automatically cause a redraw?
+        "
+        " See the comments in s:SetShellPipeNoEcho() -- this is still helpful
+        " in my MacOS/iTerm environment -- AND, it also has to have the '!'
+        if has('macunix')
+            redraw!
+        endif
+
         if a:failed
 			call nerdtree#echo("Grep failed.")
         else
 			call nerdtree#echo("No match found for " . a:pattern . " under [" . a:path . "].")
         endif
-        " Is this :redraw necessary/helpful?
-        " Does it serve the same purpose as adjusting the termcap codes?
-        " why is it only for the no-hits case?
-        " does :copen automatically cause a redraw?
-        "redraw
     elseif l:hits > 1
         "use the previous window to jump to the first search result
         wincmd w
