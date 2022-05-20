@@ -56,15 +56,13 @@ function! s:SetShellPipeNoEcho()
 endfunction
 
 " HELPER FUNC: s:HandleResults() {{{1
-function! s:HandleResults(failed)
+function! s:HandleResults(failed, pattern, path)
     let hits = len(getqflist())
     if l:hits == 0
-        if exists("a:failed")
-            "call nerdtree#echo("Grep failed.")
-            echo "Error occurred"
+        if a:failed
+			call nerdtree#echo("Grep failed.")
         else
-            "call nerdtree#echo("No match found for " . l:pattern . " under [" . l:dirnode.path.str() . "].")
-            echo "No hits"
+			call nerdtree#echo("No match found for " . a:pattern . " under [" . a:path . "].")
         endif
         " Is this :redraw necessary/helpful?
         " Does it serve the same purpose as adjusting the termcap codes?
@@ -84,7 +82,7 @@ function! NERDTreeGrepDirectory()
 
     let pattern = input("Enter the search pattern: ")
     if l:pattern == ''
-        call nedtree#echo("Grep directory aborted.")
+        call nerdtree#echo("Grep directory aborted.")
         return
     endif
 
@@ -135,7 +133,7 @@ function! NERDTreeGrepDirectory()
         exec 'silent cd ' . l:old_cwd
     endtry
 
-    call s:HandleResults(l:failed)
+    call s:HandleResults(l:failed, l:pattern, l:dirnode.path.str())
 
 endfunction
 
@@ -146,7 +144,7 @@ function! NERDTreeRipGrepDirectory()
     let pattern = input("Enter the search pattern/options: ")
 
     if l:pattern == ''
-        call nedtree#echo("Grep directory aborted.")
+        call nerdtree#echo("Grep directory aborted.")
         return
     "else
     "    if match(l:pattern, '"') >= 0
@@ -169,5 +167,5 @@ function! NERDTreeRipGrepDirectory()
         exec 'silent cd '. l:old_cwd
     endtry
 
-    call s:HandleResults(l:failed)
+    call s:HandleResults(l:failed, l:pattern, l:dirnode.path.str())
 endfunction
