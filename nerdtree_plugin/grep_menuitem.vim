@@ -108,7 +108,7 @@ function! NERDTreeGrepDirectory()
     "a hack for *nix to ensure the grep output isnt echoed in vim
 
     let old_shellpipe = s:SetShellPipeNoEcho()
-    let old_cwd = getcwd()
+    "let old_cwd = getcwd()
 
     " TODO:  investigate the consequences / benefits of clearing the
     "        enter/exit TERMCAP codes
@@ -166,7 +166,7 @@ function! NERDTreeGrepDirectory()
         let &shellpipe = l:old_shellpipe
         "let &t_ti = l:t_ti_bak
         "let &t_te = l:t_te_bak
-        exec 'silent cd ' . l:old_cwd
+        "exec 'silent cd ' . l:old_cwd
     endtry
 
     call s:HandleResults(l:failed, l:pattern, l:dirnode.path.str())
