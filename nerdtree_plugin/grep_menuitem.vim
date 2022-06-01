@@ -130,18 +130,35 @@ function! NERDTreeGrepDirectory()
         " grepprg is set to 'ag', it is still recursive ('-r' is last)
         " (and the '-n' is harmless then for 'ag' - but needed for grep)
 
-        " TODO:  can this work for both AG and GREP if the path is provided to
+        " TODO:  can it work for both AG and GREP if the path is provided to
         "        the command?   If so, we don't have to save & restore the
         "        current directory
+        "exec 'silent cd ' . l:dirnode.path.str()
+
+        " Here we check if there is a trailing backslash in the path name
+        " If so, it interferes with the double-quotes surrounding the path
+        " and we handle that by adding an extra trailing slash (so one will
+        " escape the other and neither will escape the final double-quote)
+        let patharg = l:dirnode.path.str()
+        if patharg =~ '\\$'  " using dbl-quotes here would require:  "\\\\$"
+            " Should only happens on windows, and I *think* only when
+            " searching from a drive root, print a message if that
+            " assumption is wrong
+            if l:patharg !~ '^\w:\\$'
+                " NOTE:  this kind of error ends up in messages AND allows the
+                "        function/operation to continue
+                call nerdtree#echoError("Unexpected path value [" . l:patharg . "] needing handling for its trailing slash")
+            endif
+            let patharg = l:patharg . '\'
+        endif
 
         " TODO:  what is the consequence of escaping (or not escaping) the
         "        special characters '|' and '#' ?
-
-        "exec 'silent cd ' . l:dirnode.path.str()
         "exec 'silent grep! -nr ' . l:pattern . ' .'
+        "exec 'silent grep! -nr ' . l:pattern . ' "' . l:patharg . '"'
+
         "exec 'silent grep! -nr ' . escape(l:pattern, '|#') . ' .'
-        "exec 'silent grep! -nr ' . l:pattern . ' ' . l:dirnode.path.str()
-        exec 'silent grep! -nr ' . escape(l:pattern, '|#') . ' "' . l:dirnode.path.str() . '"'
+        exec 'silent grep! -nr ' . escape(l:pattern, '|#') . ' "' . l:patharg . '"'
         let failed = 0
     catch
         let failed = 1
